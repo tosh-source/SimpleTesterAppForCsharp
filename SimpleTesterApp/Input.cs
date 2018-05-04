@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace SimpleTesterApp
 {
@@ -42,7 +43,7 @@ namespace SimpleTesterApp
 			Console.ResetColor();
 			Console.Write(" ? : ");
 			Console.ForegroundColor = ConsoleColor.Red;
-            choise = Console.ReadLine();
+			choise = Console.ReadLine();
 			Console.ResetColor();
 
 			string fileName = "test";
@@ -54,13 +55,24 @@ namespace SimpleTesterApp
 			}
 			else if (choise[0] == 'N' || choise[0] == 'n')
 			{
+				Console.Write("Type file name pattern (e.g.: myTestFiles001.txt): ");
+				Console.ForegroundColor = ConsoleColor.Red;
 				fileName = Console.ReadLine();
+				Console.ResetColor();
+				Console.WriteLine("The program will try to find next test files..");
 
-				fileExtension = Console.ReadLine();
-				if (!(fileExtension[0] == '.'))
+				if (!(Regex.IsMatch(fileName, string.Format(@"\b{0}\b", fileExtension))))
 				{
-					fileExtension = '.' + fileExtension;
-				}
+					Console.WriteLine("The ");
+					Console.Write("Type file extension  : ");
+					Console.ForegroundColor = ConsoleColor.Red;
+					fileExtension = Console.ReadLine();
+					Console.ResetColor();
+					if (!(fileExtension[0] == '.'))
+					{
+						fileExtension = '.' + fileExtension;
+					}
+                }
 			}
 			else
 			{
