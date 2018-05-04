@@ -14,6 +14,8 @@ namespace SimpleTesterApp
 		static void Main(string[] args)
 		{
 			Input.UserData();
+
+			//var reader = new StringReader(directory + "FINENAME");
 		}
 	}
 }
