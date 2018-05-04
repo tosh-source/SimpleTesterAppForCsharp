@@ -63,7 +63,6 @@ namespace SimpleTesterApp
 
 				if (!(Regex.IsMatch(fileName, string.Format(@"\b{0}\b", fileExtension))))
 				{
-					Console.WriteLine("The ");
 					Console.Write("Type file extension  : ");
 					Console.ForegroundColor = ConsoleColor.Red;
 					fileExtension = Console.ReadLine();
