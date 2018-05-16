@@ -21,8 +21,6 @@ namespace SimpleTesterApp
 			string choice = yesOrNoQuestion();
 			string directory = String.Empty;
 
-
-
 			if (choice == string.Empty || choice == YES || choice == yes)  //choise == string.Empty -> when user press <Enter>
 			{
 				//do not delete this statement, it will prevent exeption when user press <Enter>
@@ -60,7 +58,7 @@ namespace SimpleTesterApp
 				string inTest = "in";
 				int inIndex = 0;
 
-				choice = no; //да видя проверката yes/no в while цикъла
+				choice = no;
 				do
 				{
 					Console.Write("Type file name pattern (e.g.: myTestFiles.001.in.txt): ");
