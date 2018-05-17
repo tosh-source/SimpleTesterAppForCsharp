@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Globalization;
-using System.Threading;
 using System.Text.RegularExpressions;
 
 namespace SimpleTesterApp
@@ -14,40 +12,29 @@ namespace SimpleTesterApp
 
 		public static void UserData()
 		{
-			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture; //set default culture
-
 			//1.Define path directory
 			Console.Write("Take test files from current directory ");
 			string choice = yesOrNoQuestion();
 			string directory = String.Empty;
 
-			if (choice == string.Empty || choice == YES || choice == yes)  //choise == string.Empty -> when user press <Enter>
-			{
-				//do not delete this statement, it will prevent exeption when user press <Enter>
-			}
-			else if (choice == NO || choice == no)
+			if (choice == NO || choice == no)
 			{
 				Console.Write("Where test files are placed? : ");
 				directory = ReadLineFromConsole();
 			}
-			else //да вкарам проверката в "yesOrNoQuestion()"
-			{
-				throw new ArgumentException("Invalid input data!");
-			}
 
-			//2.Define file name
-			Console.Write("The program will looking for files with this pattern: \"test.001.in.txt\" ");
+			//2.Define filename
+			Console.WriteLine("\nThe program will looking for files with this pattern:");
+			Console.WriteLine("\"test.001.in.txt\"  <- input test with data");
+			Console.WriteLine("\"test.001.out.txt\" <- output test for comparing\n");
+			Console.Write("Is that OK ");
 			choice = no;
 			choice = yesOrNoQuestion();
 
 			string fileName = "test.001.in";
 			string fileExtension = ".txt";
 
-			if (choice == string.Empty || choice == YES || choice == yes)  //choise == string.Empty -> when user press <Enter>
-			{
-				//do not delete this statement, it will prevent exeption when user press <Enter>
-			}
-			else if (choice == NO || choice == no)
+			if (choice == NO || choice == no)
 			{
 				string name = string.Empty;
 				int nameEndIndex = 0;
@@ -57,11 +44,13 @@ namespace SimpleTesterApp
 
 				string inTest = "in";
 				int inIndex = 0;
+				string outTest = "out";
 
+				//a. Get new filename pattern, if needed.
 				choice = no;
 				do
 				{
-					Console.Write("Type file name pattern (e.g.: myTestFiles.001.in.txt): ");
+					Console.Write("Type filename pattern (e.g.: myTestFiles.001.in.txt): ");
 					fileName = ReadLineFromConsole();
 
 					nameEndIndex = fileName.IndexOf('.');
@@ -70,45 +59,61 @@ namespace SimpleTesterApp
 
 					if (nameEndIndex >= numbStartIndex)
 					{
-						ReturnInfoMessageToConsole("* The program can not recognize correct sub-name and sub-number of full file name. Are you missing the delimiter (\'.\'–dot) between them?");
+						ReturnInfoMessageToConsole("\nWARNING: The program can not correct recognize sub-name and sub-number of full file name. Are you missing the delimiter (\'.\'–dot) between them?\n");
 					}
-
-					if (numbStartIndex >= inIndex)
+					else if (numbStartIndex >= inIndex)
 					{
-						ReturnInfoMessageToConsole("* The program can not recognize correct sub-number and \"in\" (wich mean input test file) word of full file name!");
+						ReturnInfoMessageToConsole("\nWARNING: The program can not correct recognize \"in\" sub-word (wich mean input test file) of full file name! It should be immediately before file extension!\n");
+
+						Console.WriteLine("Set new parameters for \"in\" (input) and \"out\" (output) tests.. ");
+						Console.Write("input tests:  ");
+						inTest = ReadLineFromConsole();
+						Console.Write("output tests: ");
+						outTest = ReadLineFromConsole();
+
+						IsCorrectNewFilenamePattern(ref choice, ref fileName, fileExtension, out name, nameEndIndex, out numb, numbStartIndex, inTest);
 					}
 					else
 					{
-						name = fileName.Substring(0, nameEndIndex);
-						numb = fileName.Substring(numbStartIndex, Regex.Match(fileName, @"\d+").Length);
-
-						Console.Write("Is that correct ");
-						choice = yesOrNoQuestion();
+						IsCorrectNewFilenamePattern(ref choice, ref fileName, fileExtension, out name, nameEndIndex, out numb, numbStartIndex, inTest);
 					}
-				} while (!(choice == YES) || !(choice == yes));
+				} while (!(choice == YES || choice == yes));
 
-				choice = yes;
-				if (!(Regex.IsMatch(fileName, string.Format(@"\b{0}\b", fileExtension))))
+				ReturnInfoMessageToConsole("\nThe program will try to find next test files..");
+			}
+		}
+
+		private static void IsCorrectNewFilenamePattern(ref string choice, ref string fileName, string fileExtension, out string name, int nameEndIndex, out string numb, int numbStartIndex, string inTest)
+		{
+			name = fileName.Substring(0, nameEndIndex);
+			numb = fileName.Substring(numbStartIndex, Regex.Match(fileName, @"\d+").Length);
+
+			CheckFilenameExtension(ref choice, ref fileName, fileExtension);
+
+			Console.Write("\nThe new filename pattern is: ");
+			fileName = name + "." + numb + "." + inTest + fileExtension;
+			ReturnInfoMessageToConsole(fileName);
+			Console.Write("Is that correct ");
+			choice = yesOrNoQuestion();
+		}
+
+		private static void CheckFilenameExtension(ref string choice, ref string fileName, string fileExtension)
+		{
+			choice = yes;
+			if (!(Regex.IsMatch(fileName, string.Format(@"\b{0}\b", fileExtension))))
+			{
+				ReturnInfoMessageToConsole("\nWARNING: The test files should be in TXT format, but you type something different!\n");
+				Console.Write("Do you want to use default TXT extension ");
+				choice = yesOrNoQuestion();
+
+				if (choice == NO || choice == no)
 				{
-					ReturnInfoMessageToConsole("The default files should be in TXT format, but you type something different..");
-					Console.Write("Do you want to use default TXT extension ");
-					choice = yesOrNoQuestion();
-
-					if (choice[0] == 'N' || choice[0] == 'n')
-					{
-						throw new ArgumentException("Invalid file extension!");
-					}
-
-					fileName = fileName.Remove(fileName.LastIndexOf('.'));
-					fileName = fileName.TrimEnd('.');
-					fileName = fileName + fileExtension;
+					throw new ArgumentException("Invalid file extension!");
 				}
 
-				Console.WriteLine("The program will try to find next test files..");
-			}
-			else
-			{
-				throw new ArgumentException("Invalid input data!");
+				fileName = fileName.Remove(fileName.LastIndexOf('.'));
+				fileName = fileName.TrimEnd('.');
+				fileName = fileName + fileExtension;
 			}
 		}
 
@@ -121,6 +126,15 @@ namespace SimpleTesterApp
 			Console.ForegroundColor = ConsoleColor.Cyan;
 			string choice = Console.ReadLine();
 			Console.ResetColor();
+
+			if (choice == string.Empty || choice == YES || choice == yes || choice == NO || choice == no)
+			{ //choise == string.Empty -> when user press <Enter>
+
+			}
+			else
+			{
+				throw new ArgumentException("Invalid input data!");
+			}
 
 			return choice;
 		}

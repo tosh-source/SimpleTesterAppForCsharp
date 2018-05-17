@@ -13,6 +13,8 @@ namespace SimpleTesterApp
 	{
 		static void Main(string[] args)
 		{
+			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture; //set default culture
+            
 			Input.UserData();
             
 
