@@ -14,11 +14,11 @@ namespace SimpleTesterApp
 		static void Main(string[] args)
 		{
 			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture; //set default culture
-            
-			Input.UserData();
-            
 
-			//var reader = new StringReader(directory + "FINENAME");
+			string directory = Input.GetPathDirectory();
+            string filename = Input.GetFilename();
+            
+			Console.WriteLine($"{directory} \n{filename}");
 		}
 	}
 }

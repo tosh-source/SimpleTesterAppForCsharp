@@ -3,18 +3,19 @@ using System.Text.RegularExpressions;
 
 namespace SimpleTesterApp
 {
-	public class Input
+	public static class Input
 	{
 		const string NO = "N";
 		const string no = "n";
 		const string YES = "Y";
 		const string yes = "y";
+		static string choice = string.Empty;
 
-		public static void UserData()
+		public static string GetPathDirectory()
 		{
 			//1.Define path directory
 			Console.Write("Take test files from current directory ");
-			string choice = yesOrNoQuestion();
+			choice = yesOrNoQuestion();
 			string directory = String.Empty;
 
 			if (choice == NO || choice == no)
@@ -23,7 +24,12 @@ namespace SimpleTesterApp
 				directory = ReadLineFromConsole();
 			}
 
-			//2.Define filename
+			return directory;
+		}
+
+		public static string GetFilename()
+		{
+			//2.Define filename (and check for input data to be correct)
 			Console.WriteLine("\nThe program will looking for files with this pattern:");
 			Console.WriteLine("\"test.001.in.txt\"  <- input test with data");
 			Console.WriteLine("\"test.001.out.txt\" <- output test for comparing\n");
@@ -71,24 +77,64 @@ namespace SimpleTesterApp
 						Console.Write("output tests: ");
 						outTest = ReadLineFromConsole();
 
-						IsCorrectNewFilenamePattern(ref choice, ref fileName, fileExtension, out name, nameEndIndex, out numb, numbStartIndex, inTest);
+						IsCorrectNewFilenamePattern(ref fileName, fileExtension, out name, nameEndIndex, out numb, numbStartIndex, inTest);
 					}
 					else
 					{
-						IsCorrectNewFilenamePattern(ref choice, ref fileName, fileExtension, out name, nameEndIndex, out numb, numbStartIndex, inTest);
+						IsCorrectNewFilenamePattern(ref fileName, fileExtension, out name, nameEndIndex, out numb, numbStartIndex, inTest);
 					}
 				} while (!(choice == YES || choice == yes));
 
 				ReturnInfoMessageToConsole("\nThe program will try to find next test files..");
 			}
+
+			return fileName;
 		}
 
-		private static void IsCorrectNewFilenamePattern(ref string choice, ref string fileName, string fileExtension, out string name, int nameEndIndex, out string numb, int numbStartIndex, string inTest)
+		private static string yesOrNoQuestion()
+		{
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.Write("(Y/n)");
+			Console.ResetColor();
+			Console.Write(" ? : ");
+			Console.ForegroundColor = ConsoleColor.Cyan;
+			string tmpChoice = Console.ReadLine();
+			Console.ResetColor();
+
+			if (tmpChoice == string.Empty || tmpChoice == YES || tmpChoice == yes || tmpChoice == NO || tmpChoice == no)
+			{ //tmpChoice == string.Empty -> (when user press <Enter> == yes)
+
+			}
+			else
+			{
+				throw new ArgumentException("Invalid input data!");
+			}
+
+			return tmpChoice;
+		}
+
+		private static string ReadLineFromConsole()
+		{
+			Console.ForegroundColor = ConsoleColor.Cyan;
+			string str = Console.ReadLine();
+			Console.ResetColor();
+
+			return str;
+		}
+
+		private static void ReturnInfoMessageToConsole(string message)
+		{
+			Console.ForegroundColor = ConsoleColor.Yellow;
+			Console.WriteLine(message);
+			Console.ResetColor();
+		}
+
+		private static void IsCorrectNewFilenamePattern(ref string fileName, string fileExtension, out string name, int nameEndIndex, out string numb, int numbStartIndex, string inTest)
 		{
 			name = fileName.Substring(0, nameEndIndex);
 			numb = fileName.Substring(numbStartIndex, Regex.Match(fileName, @"\d+").Length);
 
-			CheckFilenameExtension(ref choice, ref fileName, fileExtension);
+			CheckFilenameExtension(ref fileName, fileExtension);
 
 			Console.Write("\nThe new filename pattern is: ");
 			fileName = name + "." + numb + "." + inTest + fileExtension;
@@ -97,7 +143,7 @@ namespace SimpleTesterApp
 			choice = yesOrNoQuestion();
 		}
 
-		private static void CheckFilenameExtension(ref string choice, ref string fileName, string fileExtension)
+		private static void CheckFilenameExtension(ref string fileName, string fileExtension)
 		{
 			choice = yes;
 			if (!(Regex.IsMatch(fileName, string.Format(@"\b{0}\b", fileExtension))))
@@ -115,44 +161,6 @@ namespace SimpleTesterApp
 				fileName = fileName.TrimEnd('.');
 				fileName = fileName + fileExtension;
 			}
-		}
-
-		private static string yesOrNoQuestion()
-		{
-			Console.ForegroundColor = ConsoleColor.Green;
-			Console.Write("(Y/n)");
-			Console.ResetColor();
-			Console.Write(" ? : ");
-			Console.ForegroundColor = ConsoleColor.Cyan;
-			string choice = Console.ReadLine();
-			Console.ResetColor();
-
-			if (choice == string.Empty || choice == YES || choice == yes || choice == NO || choice == no)
-			{ //choise == string.Empty -> when user press <Enter>
-
-			}
-			else
-			{
-				throw new ArgumentException("Invalid input data!");
-			}
-
-			return choice;
-		}
-
-		private static string ReadLineFromConsole()
-		{
-			Console.ForegroundColor = ConsoleColor.Cyan;
-			string str = Console.ReadLine();
-			Console.ResetColor();
-
-			return str;
-		}
-
-		private static void ReturnInfoMessageToConsole(string message)
-		{
-			Console.ForegroundColor = ConsoleColor.Yellow;
-			Console.WriteLine(message);
-			Console.ResetColor();
 		}
 	}
 }
