@@ -6,6 +6,7 @@ using System.Threading;
 using System.IO;
 using System.Globalization;
 using System.Diagnostics;
+using SimpleTesterApp.InputData;
 
 namespace SimpleTesterApp
 {
@@ -15,8 +16,8 @@ namespace SimpleTesterApp
 		{
 			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture; //set default culture
 
-			string directory = Input.GetPathDirectory();
-            string filename = Input.GetFilename();
+			string directory = InputDataProcessing.GetPathDirectory();
+            string filename = InputDataProcessing.GetFilename();
             
 			Console.WriteLine($"{directory} \n{filename}");
 		}

@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace SimpleTesterApp
+namespace SimpleTesterApp.InputData
 {
-	public static class Input
+	public static class InputDataProcessing
 	{
 		const string NO = "N";
 		const string no = "n";
@@ -27,7 +28,7 @@ namespace SimpleTesterApp
 			return directory;
 		}
 
-		public static string GetFilename()
+		public static Dictionary<string, string> GetFilename()
 		{
 			//2.Define filename (and check for input data to be correct)
 			Console.WriteLine("\nThe program will looking for files with this pattern:");
@@ -37,22 +38,24 @@ namespace SimpleTesterApp
 			choice = no;
 			choice = yesOrNoQuestion();
 
+			var fileNameAllData = new Dictionary<string, string>();
+
 			string fileName = "test.001.in";
 			string fileExtension = ".txt";
 
-			if (choice == NO || choice == no)
-			{
-				string name = string.Empty;
-				int nameEndIndex = 0;
+			string name = string.Empty;  //"name" is a sub-name from entire filename
+			int nameEndIndex = 0;
+			
+			string numb = string.Empty;  //"numb" is a sub-numb from entire filename
+			int numbStartIndex = 0;
+			
+			string inTest = "in";
+			int inIndex = 0;
+			string outTest = "out";
 
-				string numb = string.Empty;
-				int numbStartIndex = 0;
-
-				string inTest = "in";
-				int inIndex = 0;
-				string outTest = "out";
-
-				//a. Get new filename pattern, if needed.
+			if (choice == NO || choice == no) //Get new filename pattern, if needed.
+            {
+				//Get new filename pattern.
 				choice = no;
 				do
 				{
@@ -88,7 +91,14 @@ namespace SimpleTesterApp
 				ReturnInfoMessageToConsole("\nThe program will try to find next test files..");
 			}
 
-			return fileName;
+			//results
+			fileNameAllData.Add("fileName", fileName);
+			fileNameAllData.Add("name", name);
+			fileNameAllData.Add("numb", numb);
+			fileNameAllData.Add("inTest", inTest);
+			fileNameAllData.Add("outTest", outTest);
+
+			return fileNameAllData;
 		}
 
 		private static string yesOrNoQuestion()
