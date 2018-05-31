@@ -45,16 +45,16 @@ namespace SimpleTesterApp.InputData
 
 			string name = string.Empty;  //"name" is a sub-name from entire filename
 			int nameEndIndex = 0;
-			
+
 			string numb = string.Empty;  //"numb" is a sub-numb from entire filename
 			int numbStartIndex = 0;
-			
+
 			string inTest = "in";
 			int inIndex = 0;
 			string outTest = "out";
 
 			if (choice == NO || choice == no) //Get new filename pattern, if needed.
-            {
+			{
 				//Get new filename pattern.
 				choice = no;
 				do

@@ -14,12 +14,17 @@ namespace SimpleTesterApp
 	{
 		static void Main(string[] args)
 		{
+			//Input parameters and settings.
 			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture; //set default culture
+			InputDataGetter getUserInputParameters = new InputDataGetter();
 
-			string directory = InputDataProcessing.GetPathDirectory();
-            string filename = InputDataProcessing.GetFilename();
-            
-			Console.WriteLine($"{directory} \n{filename}");
+			string directory = getUserInputParameters.GetPathDirectory;
+			string testFilename = getUserInputParameters.GetFullFilename;
+			string testSubName = getUserInputParameters.GetSubFilename;
+			string testSubNumber = getUserInputParameters.GetFileNumber;
+			string testInputWord = getUserInputParameters.GetTestInputWord;
+			string testOutputWord = getUserInputParameters.GetTestOutputWord;
+
 		}
 	}
 }
