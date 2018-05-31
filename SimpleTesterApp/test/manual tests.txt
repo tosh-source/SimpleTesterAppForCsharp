@@ -1,0 +1,14 @@
+Take test files from current directory (Y/n) ? : y
+Is that OK (Y/n) ? : n
+
+Type filename pattern (e.g.: myTestFiles.001.in.txt): test001.md
+Type filename pattern (e.g.: myTestFiles.001.in.txt): test.001.md
+
+Set new parameters for "in" (input) and "out" (output) tests.. 
+input tests:  in
+output tests: out
+
+Do you want to use default TXT extension (Y/n) ? : y
+
+The new filename pattern is: test.001.in.txt
+Is that correct (Y/n) ? : y
