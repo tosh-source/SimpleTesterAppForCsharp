@@ -36,16 +36,23 @@ namespace SimpleTesterApp
             }
             catch (FileNotFoundException fnEx)
             {
-                Console.WriteLine(fnEx.Message);
+				ReturnInfoMessageToConsole(fnEx.Message);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-            }
+				ReturnInfoMessageToConsole(ex.Message);
+			}
             finally
             {
                 reader.Close();
             }
+        }
+
+		private static void ReturnInfoMessageToConsole(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(message);
+            Console.ResetColor();
         }
     }
 }
