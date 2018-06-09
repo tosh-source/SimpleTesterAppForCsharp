@@ -73,6 +73,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="InputData\InputDataProcessing.cs" />
     <Compile Include="InputData\InputDataGetter.cs" />
+    <Compile Include="Testing.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

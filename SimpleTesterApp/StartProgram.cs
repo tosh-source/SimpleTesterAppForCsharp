@@ -10,22 +10,25 @@ using SimpleTesterApp.InputData;
 
 namespace SimpleTesterApp
 {
-	class StartProgram
-	{
-		static void Main(string[] args)
-		{
-			//Input parameters and settings.
-			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture; //set default culture
-			InputDataGetter getUserInputParameters = new InputDataGetter();
+    class StartProgram
+    {
+        static void Main(string[] args)
+        {
+            //Input parameters and settings.
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture; //set default culture
+            InputDataGetter getUserInputParameters = new InputDataGetter();
 
-			string directory = getUserInputParameters.GetPathDirectory;
-			string testFilename = getUserInputParameters.GetFullFilename;
-			string testSubName = getUserInputParameters.GetSubFilename;
-			string testSubNumber = getUserInputParameters.GetFileNumber;
-			string testInputWord = getUserInputParameters.GetTestInputWord;
-			string testOutputWord = getUserInputParameters.GetTestOutputWord;
+            string directory = getUserInputParameters.GetPathDirectory;
+            string testFilename = getUserInputParameters.GetFullFilename;
+            string testSubName = getUserInputParameters.GetSubFilename;
+            StringBuilder testSubNumber = new StringBuilder(
+                                     getUserInputParameters.GetFileNumber);
+            string testInputWord = getUserInputParameters.GetTestInputWord;
+            string testOutputWord = getUserInputParameters.GetTestOutputWord;
 
-		}
-	}
+            //Testing
+            Testing.Start(directory, testFilename, testSubName, testSubNumber, testInputWord, testOutputWord);
+        }
+    }
 }
 //Environment.NewLine
