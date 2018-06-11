@@ -43,10 +43,10 @@ namespace SimpleTesterApp.InputData
 			string fileName = "test.001.in";
 			string fileExtension = ".txt";
 
-			string name = string.Empty;  //"name" is a sub-name from entire filename
+			string name = "test";  //"name" is a sub-name from entire filename
 			int nameEndIndex = 0;
 
-			string numb = string.Empty;  //"numb" is a sub-numb from entire filename
+			string numb = "001";  //"numb" is a sub-numb from entire filename
 			int numbStartIndex = 0;
 
 			string inTest = "in";
