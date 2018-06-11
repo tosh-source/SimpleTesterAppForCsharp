@@ -36,11 +36,11 @@ namespace SimpleTesterApp
             }
             catch (FileNotFoundException fnEx)
             {
-				ReturnInfoMessageToConsole(fnEx.Message);
+				ReturnInfoMessageToConsole("\n" + fnEx.Message);
             }
             catch (Exception ex)
             {
-				ReturnInfoMessageToConsole(ex.Message);
+				ReturnInfoMessageToConsole("\n" + ex.Message);
 			}
             finally
             {

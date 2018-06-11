@@ -87,9 +87,13 @@ namespace SimpleTesterApp.InputData
 						IsCorrectNewFilenamePattern(ref fileName, fileExtension, out name, nameEndIndex, out numb, numbStartIndex, inTest);
 					}
 				} while (!(choice == YES || choice == yes));
-
-				ReturnInfoMessageToConsole("\nThe program will try to find next test files..");
+            }
+			else
+			{
+				fileName = fileName + fileExtension;
 			}
+
+			ReturnInfoMessageToConsole("\nThe program will try to find next test files..");
 
 			//results
 			fileNameAllData.Add("fileName", fileName);
