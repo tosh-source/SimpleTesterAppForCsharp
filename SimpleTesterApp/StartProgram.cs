@@ -18,13 +18,13 @@ namespace SimpleTesterApp
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture; //set default culture
             InputDataGetter getUserInputParameters = new InputDataGetter();
 
-            string directory = getUserInputParameters.GetPathDirectory;
-            string testFilename = getUserInputParameters.GetFullFilename;
-            string testSubName = getUserInputParameters.GetSubFilename;
-            StringBuilder testSubNumber = new StringBuilder(
-                                     getUserInputParameters.GetFileNumber);
-            string testInputWord = getUserInputParameters.GetTestInputWord;
-            string testOutputWord = getUserInputParameters.GetTestOutputWord;
+            var directory = getUserInputParameters.GetPathDirectory;
+			var testFilename = new StringBuilder(
+				                     getUserInputParameters.GetFullFilename);
+            var testSubName = getUserInputParameters.GetSubFilename;
+            var testSubNumber = getUserInputParameters.GetFileNumber;
+            var testInputWord = getUserInputParameters.GetTestInputWord;
+            var testOutputWord = getUserInputParameters.GetTestOutputWord;
 
             //Testing
             Testing.Start(directory, testFilename, testSubName, testSubNumber, testInputWord, testOutputWord);
