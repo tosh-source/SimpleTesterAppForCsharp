@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Diagnostics;
 using System.Text;
 using System.Linq;
 
@@ -9,22 +10,25 @@ namespace SimpleTesterApp
 	{
 		public static void Start(string directory, StringBuilder testFilename, string testSubName, string testSubNumber, string testInputWord, string testOutputWord)
 		{
-			TextReader reader = null;
-			int numbLength = testSubNumber.Length;
-
-			try
-			{
-				int currentSubNumber = int.Parse(testSubNumber);
+            try
+            {
+				TextReader reader = null;
+				string currentTestData = null;
+                int numbLength = testSubNumber.Length;
+                int currentSubNumber = int.Parse(testSubNumber);
 
 				while (true)
 				{
-					//testing programs
+					//a.Looking for specific test file
 					using (reader = new StreamReader(directory + testFilename))
 					{
-						string currentTestData = reader.ReadToEnd();
+						 currentTestData = reader.ReadToEnd();
 					}
 
-					//Replace old number with (increased) new one and fill with zeros. 
+					//b.Testing programs
+					TestingMethod(currentTestData);
+
+					//c.Replace old number with (increased) new one and fill with zeros. 
 					testFilename.Replace(currentSubNumber.ToString().PadLeft(numbLength, '0'),
 										  (++currentSubNumber).ToString().PadLeft(numbLength, '0'));
 				}
@@ -38,6 +42,11 @@ namespace SimpleTesterApp
 			{
 				ReturnInfoMessageToConsole("\n" + ex.Message);
 			}
+		}
+
+		private static void TestingMethod(string currentTestData)
+		{
+			
 		}
 
 		private static void ReturnInfoMessageToConsole(string message)
