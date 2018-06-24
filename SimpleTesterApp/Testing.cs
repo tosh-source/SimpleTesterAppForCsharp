@@ -8,7 +8,7 @@ namespace SimpleTesterApp
 {
 	public static class Testing
 	{
-		public static void Start(string directory, StringBuilder testFilename, string testSubName, string testSubNumber, string testInputWord, string testOutputWord)
+		public static void Start(string directory, StringBuilder testFilename, string testSubNumber, string testInputWord, string testOutputWord)
 		{
             try
             {
@@ -46,7 +46,7 @@ namespace SimpleTesterApp
 
 		private static void TestingMethod(string currentTestData)
 		{
-			
+			//TO DO: add on Input method functionality to grab name/directory to .exe program that need to b tested
 		}
 
 		private static void ReturnInfoMessageToConsole(string message)

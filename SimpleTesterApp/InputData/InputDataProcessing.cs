@@ -15,13 +15,14 @@ namespace SimpleTesterApp.InputData
 		public static string GetPathDirectory()
 		{
 			//1.Define path directory
-			Console.Write("Take test files from current directory ");
+			ReturnInfoMessageToConsole("NOTE: Test files and the program (for testing) should be in same directory!\n");
+			Console.Write("Take test files and testing program from current directory ");
 			choice = yesOrNoQuestion();
 			string directory = String.Empty;
 
 			if (choice == NO || choice == no)
 			{
-				Console.Write("Where test files are placed? : ");
+				Console.Write("Where test files and program are placed? : ");
 				directory = ReadLineFromConsole();
 			}
 

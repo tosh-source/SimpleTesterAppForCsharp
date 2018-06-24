@@ -21,13 +21,13 @@ namespace SimpleTesterApp
             var directory = getUserInputParameters.GetPathDirectory;
 			var testFilename = new StringBuilder(
 				                     getUserInputParameters.GetFullFilename);
-            var testSubName = getUserInputParameters.GetSubFilename;
+            //var testSubName = getUserInputParameters.GetSubFilename;
             var testSubNumber = getUserInputParameters.GetFileNumber;
             var testInputWord = getUserInputParameters.GetTestInputWord;
             var testOutputWord = getUserInputParameters.GetTestOutputWord;
 
             //Testing
-            Testing.Start(directory, testFilename, testSubName, testSubNumber, testInputWord, testOutputWord);
+            Testing.Start(directory, testFilename, testSubNumber, testInputWord, testOutputWord);
         }
     }
 }
