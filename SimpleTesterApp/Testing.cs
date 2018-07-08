@@ -13,7 +13,7 @@ namespace SimpleTesterApp
             try
             {
 				TextReader reader = null;
-				string currentTestData = null;
+				string currentTestDoc = null;
                 int numbLength = testSubNumber.Length;
                 int currentSubNumber = int.Parse(testSubNumber);
 
@@ -22,11 +22,11 @@ namespace SimpleTesterApp
 					//a.Looking for specific test file
 					using (reader = new StreamReader(directory + testFilename))
 					{
-						 currentTestData = reader.ReadToEnd();
+						 currentTestDoc = reader.ReadToEnd();
 					}
 
 					//b.Testing programs
-					TestingMethod(currentTestData);
+					TestingMethod(currentTestDoc, directory, testFilename);
 
 					//c.Replace old number with (increased) new one and fill with zeros. 
 					testFilename.Replace(currentSubNumber.ToString().PadLeft(numbLength, '0'),
@@ -44,9 +44,21 @@ namespace SimpleTesterApp
 			}
 		}
 
-		private static void TestingMethod(string currentTestData)
+		private static void TestingMethod(string currentTestData, string directory, StringBuilder testFilename)
 		{
 			//TO DO: add on Input method functionality to grab name/directory to .exe program that need to b tested
+			Process programToTest = new Process();
+
+            try
+			{
+				programToTest.StartInfo.WorkingDirectory = directory;
+				programToTest.StartInfo.FileName = testFilename.ToString();
+
+			}
+			catch (Exception ex)
+			{
+
+			}
 		}
 
 		private static void ReturnInfoMessageToConsole(string message)
