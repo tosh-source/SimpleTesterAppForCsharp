@@ -10,9 +10,10 @@ namespace SimpleTesterApp
 	{
 		public static void Start(string directory, StringBuilder testFilename, string testSubNumber, string testInputWord, string testOutputWord)
 		{
+			
+			TextReader reader = null;
             try
             {
-				TextReader reader = null;
 				string currentTestDoc = null;
                 int numbLength = testSubNumber.Length;
                 int currentSubNumber = int.Parse(testSubNumber);
@@ -41,6 +42,10 @@ namespace SimpleTesterApp
 			catch (Exception ex)
 			{
 				ReturnInfoMessageToConsole("\n" + ex.Message);
+			}
+            finally
+			{
+				reader.Close();
 			}
 		}
 
